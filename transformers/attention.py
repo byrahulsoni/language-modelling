@@ -140,23 +140,6 @@ class MultiHeadSelfAttention(nn.Module):
         return output, scores # [batch, seq_len, d_model] and [batch, seq_len, seq_len]
 
 
-
-# if __name__ == "__main__":
-#     batch = 4
-#     seq_len = 10
-#     d_model = 512 # also equal to embedding dim
-#     d_k=128
-#     d_v=64
-#     attention = SingleHeadAttention(d_model, d_k, d_v)
-#     input = torch.rand((batch, seq_len, d_model))
-#     output, attn_scores = attention(input)
-#     print(input.shape)
-#     print(attn_scores.shape)
-#     print(attn_scores[0])
-#     print(torch.sum(attn_scores[0], dim=1))
-#     print(output.shape)
-
-
 def causal_mask(n, device=None):
     """[1, 1, n, n] lower-triangular bool mask: position i may attend to j <= i."""
     return torch.tril(torch.ones(n, n, dtype=torch.bool, device=device)).view(1, 1, n, n)
