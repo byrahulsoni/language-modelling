@@ -28,7 +28,7 @@ class PositionalEncodingNumpy:
         return self.pe[:seq_length]
 
 
-class PositionalEncodingPyTorch(nn.Module):
+class PositionalEncoding(nn.Module):
     """PyTorch implementation of Positional Encoding"""
     def __init__(self, d_model: int, dropout: float = 0.1, max_len:int=5000, constant_base:float=10000.0) -> None:
         super().__init__()
@@ -61,7 +61,7 @@ class PositionalEncodingPyTorch(nn.Module):
         return self.dropout(x)
 
 
-def get_pe_matrix(encoder: PositionalEncodingNumpy | PositionalEncodingPyTorch, seq_len: int) -> NDArray:
+def get_pe_matrix(encoder: PositionalEncodingNumpy | PositionalEncoding, seq_len: int) -> NDArray:
     """Return the encoding as a numpy array of shape (seq_len, d_model) for either implementation."""
     pe = encoder.pe
 
@@ -79,7 +79,7 @@ def get_pe_matrix(encoder: PositionalEncodingNumpy | PositionalEncodingPyTorch, 
 
 
 def plot_pe(
-    encoder_cls: type = PositionalEncodingNumpy,
+    encoder_cls: PositionalEncodingNumpy | PositionalEncoding,
     seq_lens: tuple[int, ...] = (128, 256, 512),
     d_models: tuple[int, ...] = (128, 256, 512),
     line_dims: tuple[int, ...] = (0, 16, 32, 64),
@@ -133,4 +133,4 @@ def plot_pe(
 
 if __name__ == "__main__":
     # plot_pe(PositionalEncodingNumpy)
-    plot_pe(PositionalEncodingPyTorch)
+    plot_pe(PositionalEncoding)
